@@ -17,7 +17,7 @@ const observable = from  (invoices)
 observable
 .pipe(
   filter((item:Invoice) => item.customer === 'Paolo Perrone')
-).subscribe(item => console.log(item.amount));
+).subscribe(item => console.log(item.customer));
 
 const observable2 = from (invoices)
 
