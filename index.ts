@@ -32,4 +32,4 @@ observable2
    
     return acc +item.amount;
   },0 )
-).subscribe(val => console.log(`Il totale fatturato di dicembre è : ${val}`))
+).subscribe(val => console.log(`Il totale fatturato di novembre è : ${val}`))
