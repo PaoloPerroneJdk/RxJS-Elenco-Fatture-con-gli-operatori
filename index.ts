@@ -21,7 +21,7 @@ observable
 
 const observable2 = from (invoices)
 
-observable
+observable2
 .pipe(
   filter((item : Invoice) => {
     const timestamp = item.date;
