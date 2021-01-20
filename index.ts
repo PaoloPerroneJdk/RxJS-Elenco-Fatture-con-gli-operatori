@@ -24,8 +24,8 @@ const observable2 = from (invoices)
 observable
 .pipe(
   filter((item : Invoice) => {
-    const timeStamp = item.date;
-    const month = new Date(timeStamp).getMonth()+1 /* mettiamo +1 perchè i mesi partono da zero */
+    const timestamp = item.date;
+    const month = new Date(timestamp).getMonth()+1 /* mettiamo +1 perchè i mesi partono da zero */
     return month === 12;
   }),
   reduce( (acc : number , item : Invoice) =>{
