@@ -1,4 +1,4 @@
-import { from ,Observable} from "rxjs";
+import { from ,Observable, of, zip} from "rxjs";
 import { filter, groupBy, mergeMap,  reduce, toArray } from "rxjs/operators";
 import {invoices} from './data.json'
 
@@ -41,7 +41,9 @@ const observable3 = from (invoices)
 
 observable3
 .pipe(
-  groupBy((item : Invoice)  => new Date(item.date).getMonth()+1),
-  mergeMap(group => group.pipe(toArray()))
+  groupBy((item : Invoice)  => new Date(item.date).getMonth()+1,
+    (invoice : Invoice) => invoice.amount
+  ),
+  mergeMap(group => zip ( of(group.key), group.pipe(toArray())))
 ).subscribe(val => console.log({val}))
 
