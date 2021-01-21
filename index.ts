@@ -1,5 +1,5 @@
 import { from ,Observable} from "rxjs";
-import { filter, reduce } from "rxjs/operators";
+import { filter, groupBy, mergeMap,  reduce, toArray } from "rxjs/operators";
 import {invoices} from './data.json'
 
 type Invoice = {
@@ -33,3 +33,15 @@ observable2
     return acc +item.amount;
   },0 )
 ).subscribe(val => console.log(`Il totale fatturato di novembre è : ${val}`))
+
+
+/*RAGGRUPPARE LE FATTURE  */
+
+const observable3 = from (invoices)
+
+observable3
+.pipe(
+  groupBy((item : Invoice)  => new Date(item.date).getMonth()+1),
+  mergeMap(group => group.pipe(toArray()))
+).subscribe(val => console.log({val}))
+
