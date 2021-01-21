@@ -1,5 +1,5 @@
 import { from ,Observable, of, zip} from "rxjs";
-import { filter, groupBy, mergeMap,  reduce, toArray } from "rxjs/operators";
+import { filter, groupBy, map, mergeMap,  reduce, toArray } from "rxjs/operators";
 import {invoices} from './data.json'
 
 type Invoice = {
@@ -44,6 +44,10 @@ observable3
   groupBy((item : Invoice)  => new Date(item.date).getMonth()+1,
     (invoice : Invoice) => invoice.amount
   ),
-  mergeMap(group => zip ( of(group.key), group.pipe(toArray())))
-).subscribe(val => console.log({val}))
+  mergeMap(group => zip ( of(group.key), group.pipe(toArray()))),
+  map(group => ({
+    month : group[0],
+    totalAmount: group[1].reduce((acc,val) => acc + val ,0 )
+  }))
+).subscribe(group => console.log(`Flusso mese ${group.month} : euro ${group.totalAmount}`))
 
